@@ -177,10 +177,12 @@ class SwiftStorage::Service
         end
       end
     end
-
-    response = Net::HTTP.start(uri.host, uri.port) do |http|
-      http.use_ssl = uri.scheme == 'https'
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless ssl_verify
+    http_req = Net::HTTP.new(uri.host, uri.port)
+    if uri.scheme =='https'
+      http_req.use_ssl = true
+      http_req.verify_mode = OpenSSL::SSL::VERIFY_NONE unless ssl_verify
+    end
+    response = htt_req.start do |http|
       http.request(req, &output_proc)
     end
 
