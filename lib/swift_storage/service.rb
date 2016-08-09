@@ -182,7 +182,7 @@ class SwiftStorage::Service
       http_req.use_ssl = true
       http_req.verify_mode = OpenSSL::SSL::VERIFY_NONE unless ssl_verify
     end
-    response = htt_req.start do |http|
+    response = http_req.start do |http|
       http.request(req, &output_proc)
     end
 
